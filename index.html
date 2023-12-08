@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<!-- script de A-Frane version1 1.0.0 -->
+	<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+	<!-- script de AR.JS con soporte de marker + location -->
+	<script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+        <script src="gesture-detector.js"></script>
+	<script src="gesture-handler.js"></script>
+	</head>
+	
+	<body style="margin : 0px; overflow: hidden;">
+	
+		<a-scene embedded arjs="sourceType: webcam; DebugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+		renderer="logaritthmiDepthBuffer: true;"
+		vr-mode-ui="enables:false" gesture-detector id="scene">
+      
+		<a-assets>
+         
+         <a-asset-item id="IA" src="https://cdn.glitch.global/7d9dcf54-6a42-41ec-bdde-95085937865b/enemieshalo_5guardian.glb?v=1702002031174"></a-asset-item>
+         <a-asset-item id="MAESTRO" src="https://cdn.glitch.global/7d9dcf54-6a42-41ec-bdde-95085937865b/teacher_profile_type_1.glb?v=1702003618124"></a-asset-item>
+         <a-asset-item id="BIBLIOTECA" src="https://cdn.glitch.global/7d9dcf54-6a42-41ec-bdde-95085937865b/retro_library_diorama.glb?v=1702002029050"></a-asset-item>
+         <audio id="sound1" src="inovacion.mp3" preload="auto"></audio> 
+	       <audio id="sound2" src="objetivo.mp3" preload="auto"></audio> 
+         <audio id="sound3" src="meta.mp3" preload="auto"></audio>
+
+
+
+		</a-assets>
+			<a-marker id="mk1" type="barcode" value="8" raycaster="objects: .clickable">		
+          <a-entity     
+                gltf-model="#IA" scale="0.0000005 0.0000005 0.0000005" rotation="90 270 90" position="0 0 0" class="clickable" gesture-handler soundhandler>
+          </a-entity>
+      </a-marker>
+      <a-marker id="mk2" type="barcode" value="4" raycaster="objects: .clickable">		
+          <a-entity    
+                gltf-model="#MAESTRO" scale="0.7 0.7 0.7" rotation="270 270 90" position="0 0 0" class="clickable" gesture-handler soundhandler>
+          </a-entity>
+      </a-marker>
+      <a-marker id="mk3" type="barcode" value="62" raycaster="objects: .clickable">		
+          <a-entity     
+                gltf-model="#BIBLIOTECA" scale="0.01 0.01 0.01" rotation="270 270 90" position="" class="clickable" gesture-handler soundhandler>
+          </a-entity>
+      </a-marker>
+    
+    <a-entity id="audio1" sound="src: #sound1" autoplay="false"></a-entity>
+		<a-entity id="audio2" sound="src: #sound2" autoplay="false"></a-entity>
+    <a-entity id="audio3" sound="src: #sound3" autoplay="false"></a-entity>
+		<a-entity camera></a-entity>
+		
+			
+		</a-scene>s
+		
+		<script>
+      AFRAME.registerComponent('soundhandler', {
+        tick: function () {
+          var entity1 = document.querySelector('#audio1');
+          var entity2 = document.querySelector('#audio2');
+          var entity3 = document.querySelector('#audio3');
+
+
+          if (document.querySelector('#mk1').object3D.visible == true) {
+            entity1.components.sound.playSound();
+            entity2.components.sound.pauseSound();
+            entity3.components.sound.pauseSound();
+          } 
+          
+          else if (document.querySelector('#mk2').object3D.visible == true) {
+            entity1.components.sound.pauseSound();
+            entity2.components.sound.playSound();
+            entity3.components.sound.pauseSound();
+          }
+          
+          else if (document.querySelector('#mk3').object3D.visible == true) {
+            entity1.components.sound.pauseSound();
+            entity2.components.sound.pauseSound();
+            entity3.components.sound.playSound();
+          }
+          
+          
+          else{
+            entity1.components.sound.pauseSound();
+            entity2.components.sound.pauseSound();
+            entity3.components.sound.pauseSound();
+          }
+        }
+      });
+
+		</script>
+		
+	</body>
+</html>
